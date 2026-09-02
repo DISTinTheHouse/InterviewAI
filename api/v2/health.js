@@ -6,9 +6,9 @@ module.exports = async function handler(req, res) {
   try {
     const supabase = getSupabaseAdmin();
     const { error } = await supabase.from('interviewai_invites').select('id', { head: true, count: 'exact' });
-    if (error) return res.status(503).json({ ok: false, service: 'database', code: error.code || 'QUERY_FAILED' });
+    if (error) return res.status(503).json({ ok: false, service: 'database', code: error.code || 'QUERY_FAILED', detail: String(error.message || 'Unknown query error').slice(0, 160) });
     return res.status(200).json({ ok: true, service: 'interviewai-v2' });
-  } catch {
-    return res.status(503).json({ ok: false, service: 'configuration' });
+  } catch (error) {
+    return res.status(503).json({ ok: false, service: 'configuration', detail: String(error?.message || 'Unknown configuration error').slice(0, 160) });
   }
 };
