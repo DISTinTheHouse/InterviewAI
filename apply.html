@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Completa tu entrevista estructurada en InterviewAI.">
+  <title>Entrevista · InterviewAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/apply.css">
+</head>
+<body>
+  <header class="candidate-header"><a class="brand" href="/"><span class="brand-mark"></span>Interview<b>AI</b></a><div><span>Entrevista segura</span><i></i><span>Supervisión humana</span></div></header>
+  <main>
+    <section class="loading-card" id="loadingView"><span class="loader"></span><h1>Preparando tu entrevista…</h1><p>Estamos validando el enlace y la vacante.</p></section>
+    <section class="error-card hidden" id="errorView"><span>!</span><h1>Este enlace no está disponible</h1><p id="errorMessage">Solicita un enlace nuevo al equipo de Reclutamiento.</p><a class="button secondary" href="/">Volver a InterviewAI</a></section>
+
+    <div class="application hidden" id="applicationView">
+      <aside class="role-panel"><span class="eyebrow lime">ENTREVISTA ESTRUCTURADA</span><h1 id="jobTitle"></h1><p id="jobSummary"></p><div class="role-meta"><span id="jobDepartment"></span><span id="jobLocation"></span><span id="jobMode"></span></div><div class="trust-card"><b>¿Qué sucederá?</b><p>Completarás tu perfil, subirás tu CV y responderás cinco preguntas. La IA organizará evidencia; una persona de HR tomará la decisión final.</p></div><div class="progress-list"><button class="active" data-step-nav="1"><b>01</b><span>Perfil y CV<small>Tu experiencia profesional</small></span></button><button data-step-nav="2"><b>02</b><span>Entrevista<small>Cinco preguntas</small></span></button><button data-step-nav="3"><b>03</b><span>Revisión<small>Consentimiento y envío</small></span></button></div></aside>
+      <section class="form-panel">
+        <div class="mobile-progress"><span id="mobileStep">Paso 1 de 3</span><div><i id="mobileBar"></i></div></div>
+        <form id="applicationForm">
+          <section class="form-step" data-step="1"><span class="eyebrow">PASO 1 DE 3</span><h2>Cuéntanos sobre tu perfil</h2><p>La información se utilizará únicamente para este proceso de selección.</p><div class="form-grid"><label>Nombre completo<input name="fullName" required maxlength="120" autocomplete="name"></label><label>Correo<input name="email" type="email" required maxlength="254" autocomplete="email"></label><label>Teléfono<input name="phone" required maxlength="40" autocomplete="tel"></label><label>Ubicación<input name="location" required maxlength="120" placeholder="Ciudad, Estado"></label><label>Años de experiencia<input name="experienceYears" type="number" required min="0" max="60" step=".5"></label><label>LinkedIn <span>(opcional)</span><input name="linkedinUrl" type="url" maxlength="300" placeholder="https://linkedin.com/in/..."></label></div><label>Resumen profesional<textarea name="professionalSummary" required minlength="40" maxlength="1800" placeholder="Describe tu experiencia más relevante, responsabilidades y logros."></textarea></label><label>Habilidades principales<input name="skills" required placeholder="Ej. JavaScript, SQL, liderazgo"></label><label class="file-drop" id="fileDrop"><input name="cv" id="cvInput" type="file" accept="application/pdf,.pdf" required><span class="file-icon">⇧</span><b id="fileLabel">Adjunta tu CV en PDF</b><small id="fileMeta">Máximo 5 MB · No se comparte fuera del proceso</small></label><div class="step-actions"><span></span><button class="button primary" type="button" data-next="2">Continuar a entrevista →</button></div></section>
+          <section class="form-step hidden" data-step="2"><span class="eyebrow">PASO 2 DE 3</span><h2>Entrevista por competencias</h2><p>Usa ejemplos concretos. Una buena respuesta explica situación, acción y resultado.</p><div class="question-list" id="questionList"></div><div class="step-actions"><button class="button secondary" type="button" data-prev="1">← Volver</button><button class="button primary" type="button" data-next="3">Revisar respuestas →</button></div></section>
+          <section class="form-step hidden" data-step="3"><span class="eyebrow">PASO 3 DE 3</span><h2>Revisa y envía</h2><p>Tu perfil será analizado con la misma rúbrica que el resto de candidatos.</p><div class="review-card"><div><span>Vacante</span><b id="reviewJob"></b></div><div><span>Perfil</span><b id="reviewName"></b></div><div><span>CV</span><b id="reviewCv"></b></div><div><span>Respuestas completas</span><b id="reviewAnswers"></b></div></div><label class="consent"><input type="checkbox" name="consent" required><span>Acepto que InterviewAI procese mi perfil, CV y respuestas para esta postulación. Entiendo que la evaluación es orientativa y que la decisión final corresponde a una persona de Recursos Humanos.</span></label><div class="notice"><b>Transparencia</b><p>No se toma una decisión automática de contratación o rechazo. HR revisará la evidencia y aprobará el resultado.</p></div><p class="form-message" id="submitMessage"></p><div class="step-actions"><button class="button secondary" type="button" data-prev="2">← Volver</button><button class="button primary" type="submit" id="submitApplication">Enviar postulación</button></div></section>
+        </form>
+      </section>
+    </div>
+
+    <section class="success-card hidden" id="successView"><span class="success-icon">✓</span><span class="eyebrow">POSTULACIÓN RECIBIDA</span><h1>Tu entrevista fue enviada.</h1><p>Reclutamiento ya puede revisar tu perfil, CV y evidencia por competencia. Si configuraste un correo válido, recibirás una copia de confirmación.</p><div class="success-id">FOLIO <b id="applicationId"></b></div><a class="button primary" href="/">Volver al inicio</a></section>
+  </main>
+  <footer><span>InterviewAI · Evaluación orientativa</span><span>Datos protegidos · Decisión humana</span></footer>
+  <script src="/assets/apply.js"></script>
+</body>
+</html>

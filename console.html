@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Consola InterviewAI para evaluar, comparar y aprobar candidatos con evidencia.">
+  <title>InterviewAI · Agency Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/console.css">
+</head>
+<body>
+  <section class="auth-shell" id="authView">
+    <div class="auth-story">
+      <a class="brand brand-light" href="/"><span class="brand-mark"></span>Interview<b>AI</b></a>
+      <div class="auth-copy">
+        <span class="eyebrow lime">AGENCY CONSOLE · V2</span>
+        <h1>Compara candidatos con evidencia, no con intuición.</h1>
+        <p>Centraliza vacantes, entrevistas, CVs, compatibilidad y decisiones de HR en un flujo auditable.</p>
+        <div class="auth-points"><span>01 · Rúbricas comparables</span><span>02 · IA propone</span><span>03 · HR decide</span></div>
+      </div>
+      <p class="auth-legal">La evaluación es orientativa y requiere supervisión humana.</p>
+    </div>
+    <div class="auth-panel">
+      <div class="auth-card">
+        <span class="eyebrow">ACCESO PARA RECLUTADORES</span>
+        <h2>Entra a tu espacio</h2>
+        <p>Usa tu correo profesional. Si es tu primera vez, crearemos un espacio con tres vacantes de ejemplo.</p>
+        <form id="authForm">
+          <label>Correo profesional<input id="authEmail" type="email" required autocomplete="email" placeholder="tu@agencia.com"></label>
+          <label>Contraseña<input id="authPassword" type="password" required minlength="8" autocomplete="current-password" placeholder="Mínimo 8 caracteres"></label>
+          <button class="button primary full" type="submit" id="authSubmit">Iniciar sesión</button>
+        </form>
+        <button class="text-button" id="toggleAuth" type="button">¿Primera vez? Crear cuenta</button>
+        <div class="auth-divider"><span>o revisa el producto</span></div>
+        <button class="button secondary full" id="demoMode" type="button">Abrir demo con datos ficticios</button>
+        <p class="form-message" id="authMessage" role="status"></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="app-shell hidden" id="appView">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand brand-light" href="/"><span class="brand-mark"></span>Interview<b>AI</b></a>
+      <div class="workspace"><small>ESPACIO DE TRABAJO</small><strong id="agencyName">Agency Console</strong><span id="workspaceMode">Conectado</span></div>
+      <nav>
+        <button class="nav-item active" data-view="dashboard"><span>⌂</span>Resumen</button>
+        <button class="nav-item" data-view="vacancies"><span>▣</span>Vacantes</button>
+        <button class="nav-item" data-view="candidates"><span>◎</span>Candidatos</button>
+        <button class="nav-item" data-view="audit"><span>↺</span>Actividad</button>
+      </nav>
+      <div class="sidebar-note"><span>CONTROL HUMANO</span><p>La IA recomienda. El equipo de HR conserva la decisión final.</p></div>
+      <button class="nav-item logout" id="logout"><span>↗</span>Salir</button>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="icon-button menu-button" id="menuToggle" aria-label="Abrir menú">☰</button>
+        <div><span class="eyebrow" id="viewEyebrow">PANEL GENERAL</span><h1 id="viewTitle">Buenos días, equipo.</h1></div>
+        <div class="top-actions"><span class="live-pill"><i></i><span id="syncLabel">Datos sincronizados</span></span><button class="button primary" id="newJob">+ Nueva vacante</button></div>
+      </header>
+
+      <div class="content">
+        <section class="view" id="dashboardView">
+          <div class="metric-grid">
+            <article class="metric-card accent"><div><small>CANDIDATOS ACTIVOS</small><b id="metricCandidates">0</b></div><span>↗</span><p>Perfiles evaluados en procesos abiertos</p></article>
+            <article class="metric-card"><div><small>COMPATIBILIDAD MEDIA</small><b><span id="metricScore">0</span><em>/100</em></b></div><span>≈</span><p>Calculada sobre la misma rúbrica</p></article>
+            <article class="metric-card"><div><small>PENDIENTES DE HR</small><b id="metricPending">0</b></div><span>!</span><p>Requieren una decisión humana</p></article>
+            <article class="metric-card dark"><div><small>TIEMPO AHORRADO</small><b id="metricHours">0h</b></div><span>✦</span><p>Estimación frente a revisión manual</p></article>
+          </div>
+
+          <div class="section-title"><div><span class="eyebrow">PROCESOS EN CURSO</span><h2>Vacantes activas</h2></div><button class="text-button" data-go="vacancies">Ver todas →</button></div>
+          <div class="job-grid" id="dashboardJobs"></div>
+
+          <div class="dashboard-grid">
+            <section class="surface"><div class="surface-head"><div><span class="eyebrow">PRIORIDAD DE REVISIÓN</span><h2>Mejores compatibilidades</h2></div><button class="text-button" data-go="candidates">Abrir ranking →</button></div><div id="topCandidates"></div></section>
+            <section class="surface"><div class="surface-head"><div><span class="eyebrow">PIPELINE</span><h2>Estado del proceso</h2></div></div><div class="pipeline-bars" id="pipelineBars"></div></section>
+          </div>
+        </section>
+
+        <section class="view hidden" id="vacanciesView">
+          <div class="section-title"><div><span class="eyebrow">ESTRUCTURA DE EVALUACIÓN</span><h2>Vacantes y rúbricas</h2><p>Cada perfil se evalúa con las mismas competencias y pesos.</p></div><button class="button primary" id="newJobSecondary">+ Crear vacante</button></div>
+          <div class="filter-row"><button class="filter active" data-job-filter="all">Todas</button><button class="filter" data-job-filter="active">Activas</button><button class="filter" data-job-filter="paused">Pausadas</button><button class="filter" data-job-filter="closed">Cerradas</button></div>
+          <div class="vacancy-list" id="vacancyList"></div>
+        </section>
+
+        <section class="view hidden" id="candidatesView">
+          <div class="section-title candidates-heading"><div><span class="eyebrow">EVALUACIÓN COMPARABLE</span><h2>Ranking de candidatos</h2><p>Selecciona una vacante para comparar evidencia bajo la misma rúbrica.</p></div><div><select id="jobSelector" aria-label="Vacante"></select></div></div>
+          <div class="ranking-summary" id="rankingSummary"></div>
+          <section class="surface table-surface">
+            <div class="table-tools"><label class="search-box">⌕<input id="candidateSearch" placeholder="Buscar candidato"></label><div class="compare-status"><b id="compareCount">0</b>/3 seleccionados <button class="button secondary small" id="openCompare" disabled>Comparar</button></div></div>
+            <div class="table-wrap"><table><thead><tr><th></th><th>Ranking</th><th>Candidato</th><th>Compatibilidad</th><th>Fortaleza principal</th><th>Recomendación IA</th><th>Decisión HR</th><th></th></tr></thead><tbody id="candidateRows"></tbody></table></div>
+            <div class="empty-state hidden" id="candidateEmpty"><span>◎</span><h3>Aún no hay entrevistas</h3><p>Crea y comparte un enlace para recibir candidatos.</p></div>
+          </section>
+        </section>
+
+        <section class="view hidden" id="auditView">
+          <div class="section-title"><div><span class="eyebrow">TRAZABILIDAD</span><h2>Actividad y decisiones</h2><p>Registro de cambios relevantes dentro del proceso.</p></div></div>
+          <section class="surface"><div class="activity-list" id="activityList"></div></section>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="jobModal" role="dialog" aria-modal="true" aria-labelledby="jobModalTitle">
+    <section class="modal modal-large"><button class="modal-close" data-close="jobModal">×</button><span class="eyebrow">NUEVO PROCESO</span><h2 id="jobModalTitle">Crear vacante y rúbrica</h2>
+      <form id="jobForm"><div class="form-grid"><label>Título<input name="title" required placeholder="Ej. Product Designer"></label><label>Área<input name="department" required placeholder="Ej. Producto"></label><label>Ubicación<input name="location" required value="México"></label><label>Modalidad<select name="workMode"><option>Remoto</option><option selected>Híbrido</option><option>Presencial</option></select></label></div>
+        <label>Objetivo del puesto<textarea name="summary" required minlength="40" placeholder="Responsabilidades, resultados esperados y contexto del puesto"></textarea></label>
+        <div class="rubric-builder"><div><h3>Rúbrica base</h3><p>Los pesos deben sumar 100%.</p></div><div class="weight-grid"><label>Técnica<input type="number" name="technical" min="0" max="100" value="30"></label><label>Problemas<input type="number" name="problemSolving" min="0" max="100" value="25"></label><label>Comunicación<input type="number" name="communication" min="0" max="100" value="20"></label><label>Ownership<input type="number" name="ownership" min="0" max="100" value="25"></label></div></div>
+        <p class="form-message" id="jobMessage"></p><div class="modal-actions"><button class="button secondary" type="button" data-close="jobModal">Cancelar</button><button class="button primary" type="submit">Crear vacante</button></div>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop hidden" id="inviteModal" role="dialog" aria-modal="true" aria-labelledby="inviteTitle">
+    <section class="modal"><button class="modal-close" data-close="inviteModal">×</button><span class="eyebrow">ENLACE ÚNICO</span><h2 id="inviteTitle">Invitar candidatos</h2><p id="inviteJobName"></p>
+      <div class="link-box"><input id="inviteUrl" readonly><button class="button primary" id="copyInvite">Copiar</button></div><p class="microcopy">El enlace vence en 30 días y puede compartirse por correo, WhatsApp o ATS.</p><div class="modal-actions"><button class="button secondary" data-close="inviteModal">Cerrar</button></div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop hidden" id="candidateModal" role="dialog" aria-modal="true" aria-labelledby="candidateModalName">
+    <section class="modal modal-dossier"><button class="modal-close" data-close="candidateModal">×</button><div id="candidateDossier"></div></section>
+  </div>
+
+  <div class="compare-drawer hidden" id="compareDrawer"><div class="compare-head"><div><span class="eyebrow">COMPARACIÓN LADO A LADO</span><h2>Evidencia por competencia</h2></div><button class="modal-close" id="closeCompare">×</button></div><div class="compare-grid" id="compareGrid"></div></div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script type="module" src="/assets/console.js"></script>
+</body>
+</html>

@@ -3,10 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "description": "Plataforma de reclutamiento y preselección con entrevistas adaptadas y reportes automatizados.",
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check api/v2/submit.js && node --check lib/evaluation.js && node --check assets/apply.js"
+  },
   "engines": {
     "node": "24.x"
   },
   "dependencies": {
-    "nodemailer": "^7.0.0"
+    "@supabase/supabase-js": "^2.57.4",
+    "busboy": "^1.6.0",
+    "nodemailer": "^7.0.0",
+    "pdf-parse": "^1.1.1"
   }
 }

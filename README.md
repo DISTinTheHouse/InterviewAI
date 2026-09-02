@@ -7,6 +7,21 @@
 
 Plataforma web de reclutamiento y preselección que automatiza la primera etapa de una entrevista laboral, desde la selección de una vacante hasta la entrega del reporte.
 
+## Agency Console v2
+
+La rama `v2/recruiter-console` amplía el proyecto para agencias de reclutamiento:
+
+- acceso interno de reclutadores con Supabase Auth;
+- vacantes con rúbricas y cinco preguntas comparables;
+- enlaces únicos de entrevista;
+- perfil, CV PDF y extracción de texto;
+- evaluación automatizada con evidencia textual y brechas;
+- ranking por compatibilidad y comparación de hasta tres candidatos;
+- recomendación de IA con aprobación obligatoria de HR;
+- historial de decisiones y almacenamiento privado de CVs.
+
+Si el backend no está configurado, la consola incluye un modo demo con datos ficticios para conservar el recorrido completo. El modo demo no guarda información real.
+
 ## Demo
 
 **[Abrir InterviewAI](https://interview-agent-done18.vercel.app)**
@@ -46,6 +61,7 @@ InterviewAI permite que cada candidato:
 | Frontend | HTML5, CSS3 y JavaScript |
 | Backend | Node.js y Vercel Functions |
 | Correo | Nodemailer y Gmail SMTP |
+| Datos y autenticación v2 | Supabase Postgres, Auth, Storage y RLS |
 | Despliegue | Vercel |
 | Flujo de construcción | ChatGPT Work Mode, Codex y Composio |
 
@@ -77,9 +93,15 @@ Configura estas variables en .env.local o en Vercel:
 GMAIL_USER=
 GMAIL_APP_PASSWORD=
 HR_REPORT_EMAIL=
+SUPABASE_URL=
+SUPABASE_PUBLISHABLE_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+APP_URL=
 ~~~
 
 Nunca publiques las credenciales reales. Los archivos .env están ignorados por Git, excepto .env.example.
+
+Aplica `supabase/interviewai_v2.sql` una sola vez en tu proyecto Supabase. Todas las tablas usan el prefijo `interviewai_` para no interferir con otras aplicaciones del mismo proyecto.
 
 ## Despliegue
 
