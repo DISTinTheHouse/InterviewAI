@@ -111,7 +111,7 @@ async function handleAuth(event) {
   $('authMessage').textContent = 'Validando acceso…';
   try {
     const result = state.signup
-      ? await state.supabase.auth.signUp({ email, password, options: { data: { product: 'InterviewAI' } } })
+      ? await state.supabase.auth.signUp({ email, password, options: { data: { product: 'InterviewAI' }, emailRedirectTo: `${location.origin}/console.html` } })
       : await state.supabase.auth.signInWithPassword({ email, password });
     if (result.error) throw result.error;
     if (!result.data.session) {
